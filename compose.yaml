@@ -1,0 +1,34 @@
+version: 3.3;
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - php
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    command: ['/bin/sh', '-c', 'php artisan serve --host=0.0.0.0 && npm run dev']
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - npm
+      - db_pgsql
+    ports:
+      - "8000:8000"
+  db_pgsql:
+    image: postgres:14.10-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: test-crop-image
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 159753159753
