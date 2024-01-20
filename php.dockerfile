@@ -12,11 +12,11 @@ RUN mkdir -p /var/www/html
 
 RUN apk add --no-cache postgresql-dev
 
-RUN docker-php-ext-install pdo pdo-pgsql
+RUN docker-php-ext-install pdo pdo_pgsql
 
 WORKDIR /var/www/html
 
-RUN chmod -R 755 /var/www/html/storage
-RUN chown -R ${PHPUSER}:${PHPGROUP} /var/www/html/storage
+RUN chmod -R 755 /var/www/html/
+RUN chown -R ${PHPUSER}:${PHPGROUP} /var/www/html/
 
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]

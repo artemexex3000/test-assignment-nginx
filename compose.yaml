@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: php.dockerfile
-    command: ['/bin/sh', '-c', 'php artisan serve --host=0.0.0.0 && npm run dev']
+    command: [ '/bin/sh', '-c', 'php artisan serve --host=0.0.0.0 && npm run dev' ]
     volumes:
       - ./src:/var/www/html
     depends_on:
@@ -32,3 +32,27 @@ services:
       POSTGRES_DB: test-crop-image
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 159753159753
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+  artisan:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db_pgsql
+    entrypoint: ["php", "/var/www/html/artisan"]
+  composer:
+    build:
+      context: .
+      dockerfile: composer.dockerfile
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+  npm:
+    image: node:21.2.0-alpine
+    volumes:
+      - ./src:/var/www/html
+    entrypoint: ["npm"]
+    working_dir: /var/www/html
