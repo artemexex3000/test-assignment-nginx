@@ -16,7 +16,7 @@ return new class extends Migration {
                 ->constrained('positions')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('photo');
