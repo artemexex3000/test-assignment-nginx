@@ -25,9 +25,8 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => 'required|min:2|max:60',
             'email' => 'required|min:2|max:100|email:rfc,dns|unique:users,email',
-            'position_id' => 'required|exists:positions,id',
-//            'phone' => 'required|regex:^[\+]{0,1}380([0-9]{9})$',
-            'phone' => ['required', 'regex:/^[\+]{0,1}380([0-9]{9})$/i'],
+            'position_id' => 'required|integer|exists:positions,id',
+            'phone' => ['required', 'regex:/^[\+]{0,1}380([0-9]{9})$/i', 'unique:users,phone'],
             'photo' => ['required', 'file', 'mimes:jpeg,jpg', 'max:5000', Rule::dimensions()->minWidth(70)->minHeight(70)],
         ];
     }

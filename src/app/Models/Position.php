@@ -11,7 +11,7 @@ class Position extends Model
 
     public $timestamps = false;
 
-    protected $table = 'position';
+    protected $table = 'positions';
     protected $primaryKey = 'id';
 
     protected $fillable = [
