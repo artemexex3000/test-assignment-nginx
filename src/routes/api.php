@@ -9,4 +9,4 @@ Route::get('/token', [TokenController::class, 'create']);
 
 Route::get('/positions', [PositionController::class, 'index']);
 
-Route::resource('/users', UserController::class)->only(['index', 'store', 'show']);
+Route::resource('/users', UserController::class, ['parameters' => ['users' => 'id']])->only(['index', 'store', 'show']);

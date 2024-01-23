@@ -7,8 +7,8 @@ use App\Models\Position;
 use App\Models\Token;
 use App\Models\User;
 use App\Services\StoreUserService;
-use Illuminate\Http\Request;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -55,16 +55,41 @@ class UserController extends Controller
         ]);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $user = User::all()->find($request->user);
-        $position = Position::all()->find($user->value('position_id'))->first()->getAttribute('name');
+        if (Validator::make([$id], ['integer'])->errors()->count() == 1) {
+            return response()->json([
+                'success' => false,
+                'message' => "Validation failed",
+                'fails' => [
+                    'user_id' => [
+                        'The user_id must be an integer.'
+                    ]
+                ],
+            ], 404);
+        }
+        if (!$user = User::find($id)) {
+            return response()->json([
+                'success' => false,
+                'message' => "The user with the requested identifier does not exist",
+                'fails' => [
+                    'user_id' => [
+                        'User not found'
+                    ]
+                ],
+            ], 404);
+        }
 
         return response()->json([
             'success' => true,
             'user' => [
-                $user->all()->first(),
-                $position,
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'position' => $user->position->name,
+                'position_id' => $user->position_id,
+                'photo' => $user->photo,
             ],
         ]);
     }
