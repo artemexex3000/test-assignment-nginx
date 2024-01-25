@@ -4,12 +4,18 @@ namespace App\Services;
 
 use App\Contracts\CreateUserInterface;
 use App\Models\User;
+use function Tinify\setKey;
 
 class StoreUserService implements CreateUserInterface
 {
     public function __construct(protected User $user)
     {
 
+    }
+
+    protected function cropImage()
+    {
+        setKey(env("TINIFY_API_KEY"));
     }
 
     public function create(

@@ -3,19 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
-use App\Models\Position;
 use App\Models\Token;
 use App\Models\User;
+use App\Services\StoreImageUserService;
 use App\Services\StoreUserService;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $data = Validator::make(request()->all(),
+            [
+                'page' => 'integer|min:1',
+                'count' => 'integer|min:1|max:100',
+            ]
+        )->errors();
+
+        if ($data->count() > 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'fails' => $data->getMessageBag(),
+            ], 422);
+        }
+
+        $user = User::orderBy('created_at', 'desc')->paginate(request()->count);
+
+        if ($user->count() == 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Page not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'page' => $user->currentPage(),
+            'total_pages' => ceil($user->total() / $user->count()),
+            'total_users' => $user->total(),
+            'count' => $user->count(),
+            'links' => [
+                'next_url' => $user->nextPageUrl() ? $user->nextPageUrl() . "&count=" . request()->count : null,
+                'prev_url' => $user->previousPageUrl() ? $user->previousPageUrl() . "&count=" . request()->count : null,
+            ],
+            'users' => $user->items(),
+        ]);
+    }
+
     /**
      * @throws TokenMismatchException
      */
-    public function store(CreateUserRequest $request, StoreUserService $storeUserService)
+    public function store(CreateUserRequest $request, StoreUserService $storeUserService, StoreImageUserService $storeImageUserService)
     {
         $token = Token::query()->where('token', '=', $request->bearerToken())->first();
 
@@ -40,7 +80,7 @@ class UserController extends Controller
             $data['name'],
             $data['email'],
             $data['phone'],
-            $request->file('photo'),
+            $storeImageUserService->crop($request->file('photo')),
             $data['position_id']
         );
 

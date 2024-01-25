@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\TokenService;
+use App\Services\StoreTokenService;
 
 class TokenController extends Controller
 {
-    public function create(TokenService $tokenService)
+    public function create(StoreTokenService $tokenService)
     {
         return response()->json([
             'success' => true,

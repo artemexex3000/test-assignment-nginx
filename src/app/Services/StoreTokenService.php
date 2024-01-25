@@ -6,7 +6,7 @@ use App\Contracts\TokenInterface;
 use App\Models\Token;
 use Illuminate\Support\Str;
 
-class TokenService implements TokenInterface {
+class StoreTokenService implements TokenInterface {
     public function __construct(protected Token $token)
     {
 
