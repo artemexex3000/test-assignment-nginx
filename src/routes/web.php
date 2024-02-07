@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::post('/register');
+
+Route::get('/users', function () {
+    return view('users');
+});
+
+
+/**
+ *
+ *
+ */
+
+Route::get('/image/{name}', function ($name) {
+//    return Storage::response(Storage::url('public/2c8fad31-1f0d-40e2-9502-b85418ebc939.jpg'));
+    return $name;
 });

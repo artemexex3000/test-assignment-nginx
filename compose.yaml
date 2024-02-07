@@ -4,7 +4,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: nginx.dockerfile
+      dockerfile: deploy_nginx/nginx.dockerfile
     ports:
       - "80:80"
     volumes:
@@ -14,7 +14,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: php.dockerfile
+      dockerfile: deploy_php/php.dockerfile
     command: [ '/bin/sh', '-c', 'php artisan serve --host=0.0.0.0 && npm run dev' ]
     volumes:
       - ./src:/var/www/html
@@ -37,7 +37,7 @@ services:
   artisan:
     build:
       context: .
-      dockerfile: php.dockerfile
+      dockerfile: deploy_php/php.dockerfile
     volumes:
       - ./src:/var/www/html
     depends_on:

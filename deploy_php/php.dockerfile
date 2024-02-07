@@ -19,7 +19,7 @@ WORKDIR /var/www/html
 RUN chmod -R 755 /var/www/html/
 RUN chown -R ${PHPUSER}:${PHPGROUP} /var/www/html/
 
-COPY ./src /var/www/html
+COPY ../src /var/www/html
 
 #USER ${PHPUSER}
 

@@ -27,7 +27,7 @@ class CreateUserRequest extends FormRequest
             'email' => 'required|min:2|max:100|email:rfc,dns|unique:users,email',
             'position_id' => 'required|integer|exists:positions,id',
             'phone' => ['required', 'regex:/^[\+]{0,1}380([0-9]{9})$/i', 'unique:users,phone'],
-            'photo' => ['required', 'file', 'mimes:jpeg,jpg', 'max:5000', Rule::dimensions()->minWidth(70)->minHeight(70)],
+            'photo' => ['required', 'file', 'mimes:jpeg,jpg', 'max:5000'],
         ];
     }
 }

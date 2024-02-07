@@ -13,11 +13,6 @@ class StoreUserService implements CreateUserInterface
 
     }
 
-    protected function cropImage()
-    {
-        setKey(env("TINIFY_API_KEY"));
-    }
-
     public function create(
         string $name,
         string $email,

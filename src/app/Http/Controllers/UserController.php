@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\StoreImageUserService;
 use App\Services\StoreUserService;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -29,7 +30,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        $user = User::orderBy('created_at', 'desc')->paginate(request()->count);
+        $user = User::with('position:id,name')->orderBy('created_at', 'desc')->paginate(request()->count);
 
         if ($user->count() == 0) {
             return response()->json([
@@ -80,7 +81,7 @@ class UserController extends Controller
             $data['name'],
             $data['email'],
             $data['phone'],
-            $storeImageUserService->crop($request->file('photo')),
+            Storage::url($storeImageUserService->crop($request->file('photo')->path())),
             $data['position_id']
         );
 

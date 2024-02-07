@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'name' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->numerify('+380#########'),
-            'photo' => fake()->image,
+            'photo' => "https://thumbnail-storage.storage.googleapis.com/767520d0-9c20-4e42-96b1-67986e7f0bfc.jpg",
             'position_id' => Position::count() ? Position::pluck('id')->random() : 1,
         ];
     }
