@@ -4,25 +4,20 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: deploy_nginx/nginx.dockerfile
+      dockerfile: nginx.dockerfile
     ports:
-      - "80:80"
-    volumes:
-      - ./src:/var/www/html
+      - "8000:80"
     depends_on:
       - php
   php:
+    env_file:
+      - .env
     build:
       context: .
-      dockerfile: deploy_php/php.dockerfile
-    command: [ '/bin/sh', '-c', 'php artisan serve --host=0.0.0.0 && npm run dev' ]
-    volumes:
-      - ./src:/var/www/html
     depends_on:
-      - npm
       - db_pgsql
     ports:
-      - "8000:8000"
+      - "9000:9000"
   db_pgsql:
     image: postgres:14.10-alpine
     restart: always
@@ -33,26 +28,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 159753159753
     volumes:
-      - ./postgresql:/var/lib/postgresql/data
-  artisan:
-    build:
-      context: .
-      dockerfile: deploy_php/php.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    depends_on:
-      - db_pgsql
-    entrypoint: ["php", "/var/www/html/artisan"]
-  composer:
-    build:
-      context: .
-      dockerfile: composer.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-  npm:
-    image: node:21.2.0-alpine
-    volumes:
-      - ./src:/var/www/html
-    entrypoint: ["npm"]
-    working_dir: /var/www/html
+      - ./postgresql:/var/lib/postgresql

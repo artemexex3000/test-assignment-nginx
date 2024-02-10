@@ -1,0 +1,45 @@
+# fly.toml app configuration file generated for test-assignment-fpm on 2024-02-10T22:05:03+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "test-assignment-fpm"
+primary_region = "waw"
+
+[build]
+    dockerfile = "./Dockerfile"
+
+[[services]]
+    auto_start_machines = false
+    auto_stop_machines = false
+    min_machines_running = 1
+
+[env]
+    APP_NAME = "Laravel"
+    APP_ENV = "local"
+    APP_DEBUG = true
+    APP_URL = "https://test-assignment-nginx.fly.dev"
+
+    ASSET_URL = "https://test-assignment-nginx.fly.dev"
+
+    LOG_CHANNEL = "stack"
+    LOG_DEPRECATIONS_CHANNEL = "null"
+    LOG_LEVEL = "debug"
+
+    DB_CONNECTION = "pgsql"
+    DB_HOST = "test-assignment-db.internal"
+    DB_PORT = "5432"
+    DB_DATABASE = "laravel"
+    DB_USERNAME = "postgres"
+
+    CACHE_DRIVER = "file"
+    FILESYSTEM_DISK = "s3"
+    SESSION_DRIVER  = "file"
+    SESSION_LIFETIME = 120
+
+    AWS_DEFAULT_REGION = "us-east1"
+    AWS_BUCKET = "thumbnail-storage"
+    AWS_USE_PATH_STYLE_ENDPOINT = false
+    AWS_ENDPOINT = "https://storage.googleapis.com"
+
+
