@@ -16,8 +16,8 @@ primary_region = "waw"
 
 [env]
     APP_NAME = "Laravel"
-    APP_ENV = "local"
-    APP_DEBUG = true
+    APP_ENV = "production"
+    APP_DEBUG = false
     APP_URL = "https://test-assignment-nginx.fly.dev"
 
     ASSET_URL = "https://test-assignment-nginx.fly.dev"

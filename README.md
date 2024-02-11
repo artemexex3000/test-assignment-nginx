@@ -1,66 +1,44 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Test Assignment
 
-## About Laravel
+### [test-assignment-nginx.fly.dev](https://test-assignment-nginx.fly.dev/)
+### [github.com](https://github.com/artemexex3000)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p>Please, provide me your username in github via email mrtrololoshka70@gmail.com before code-review, because code placed into private repository.</p> 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 1. Used packages and tools
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1.1 Composer
 
-## Learning Laravel
+- #### league/flysystem-aws-s3-v3: 3.24
+- #### tinify/tinify: 1.6
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1.2 NPM
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- #### tailwindcss: 3.4.1
+- #### daisyui: 4.6.0
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1.3 Docker
 
-## Laravel Sponsors
+#### Inner docker components:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- ##### nginx
+- ##### PHP-FPM
 
-### Premium Partners
+### 1.4 fly.io
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 2. About completed tasks
 
-## Contributing
+<p>All tasks have been completed successfully, except, creating offset in pagination section, because of misunderstanding
+how to use it at API stage.</p>
+<p>Test assignment was done within about ~24 hours. It took so much time because of specific deploying into Fly.io, as hosting
+that has 3 free virtual machines. In my case I have nginx server, PHP-FPM needed to interpreting php code, nginx cannot, front-end and PostgreSQL.
+All components was placed into 3 different container to have a possibility to deploy them in 3 fly's VMs. Front-end assets didn't work as needed, at the first
+option, because of nginx - it couldn't accept and send from remote assets from DaisyUI and Tailwind CSS to PHP-FPM. I could create fourth docker container for assets, 
+but, as I said, that fly.io has 3 free vm, 4+ has to be paid, so it was decided to move assets to nginx dockerfile into subdirectory to save 3 containers: nginx+assets, PHP-FPM+composer, PostgreSQL.
+Also, I had some problems with Front-end and fetching API with Javascript from remote created laravel api. I don't like front-end unlike back-end, 
+therefore, I received knowledge about this while completing the task. At the start of completing task I faced with difficulty of designing token, because I didn't think,
+that I could just make it manually by generating and placing into database. And the last one problem is responses. Laravel provides a good solution, generating responses automatically, 
+without adding JSON headers from developer, just using it from the box. It was very long to understand, how exactly I should send as response to fetch it in front-end.</p>
+<p>TinyPNG API was used to cropping images. Images save into Google Storage and get to front-end via Storage::url().</p>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
